@@ -14,7 +14,7 @@ const AccessPage = ({ children, googleId }) => {
             <div className="alert-access-denied">
               <img src="/images/access_denied.png" alt="access denided" />
               <h1>{title}</h1>
-              <p>Account not support this feature.</p>
+              <p>{message}</p>
             </div>
           </div>
         </div>
