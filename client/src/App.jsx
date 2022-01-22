@@ -11,6 +11,7 @@ import Profile from "./pages/profile/Profile";
 import UpdateProfile from "./pages/profile/UpdateProfile";
 import UpdatePassword from "./pages/profile/UpdatePassword";
 import ProductDetails from "./pages/product/ProductDetail";
+import NotFound from "./pages/not-found/NotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function App() {
             <Route path="/me/update" element={<UpdateProfile />} />
             <Route path="/password/update" element={<UpdatePassword />} />
             <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/*" element={<NotFound />} />
           </Routes>
         </div>
       )}
