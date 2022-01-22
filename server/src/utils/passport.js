@@ -2,15 +2,11 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const passport = require("passport");
 const User = require("../User/model/User");
 
-const GOOGLE_CLIENT_ID =
-  "377199088831-envk35vop1mkgm78l4kqattcipfjn7p5.apps.googleusercontent.com";
-const GOOGLE_CLIENT_SECRET = "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";
-
 passport.use(
   new GoogleStrategy(
     {
-      clientID: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "/auth/google/callback",
       proxy: true,
     },
