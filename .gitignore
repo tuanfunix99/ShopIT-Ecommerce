@@ -1,7 +1,4 @@
 /node_modules/
 /client/node_modules/
 
-# production
-/client/build
-
 .env
