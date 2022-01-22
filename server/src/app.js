@@ -63,9 +63,8 @@ app.get(
 app.use("/api/v1/user", UserRoutes);
 app.use("/api/v1/products", ProductRoutes);
 
-if (process.env.NODE_ENV === "PRODUCTION") {
+if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, "../client/build")));
-
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../client/build/index.html"));
   });
