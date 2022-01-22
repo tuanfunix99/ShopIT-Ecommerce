@@ -1,0 +1,27 @@
+
+.access-denided-page{
+    background: #232f3e;
+    height: 517px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.access-denided-page img{
+    width: 200px;
+    height: 200px;
+}
+
+.access-denided-page h1{
+    font-size: 40px;
+    font-weight: 800;
+    color: white;
+    margin-top: 20px;
+}
+
+.access-denided-page p{
+    font-size: 20px;
+    font-weight: 800;
+    color: white;
+    margin-top: 20px;
+}

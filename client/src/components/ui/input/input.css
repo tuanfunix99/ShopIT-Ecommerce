@@ -1,0 +1,13 @@
+.invalid-alert {
+  color: red;
+  font-family: emoji;
+  font-weight: 500;
+}
+
+.invalid{
+    border: 1px solid red;
+}
+
+label{
+  text-transform: capitalize;
+}
