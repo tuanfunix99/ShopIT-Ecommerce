@@ -63,6 +63,14 @@ app.get(
 app.use("/api/v1/user", UserRoutes);
 app.use("/api/v1/products", ProductRoutes);
 
+if (process.env.NODE_ENV === "PRODUCTION") {
+  app.use(express.static(path.join(__dirname, "../client/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client/build/index.html"));
+  });
+}
+
 app.listen(PORT, () => {
   log.info("Listening on port " + PORT);
 });
