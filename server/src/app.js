@@ -8,6 +8,7 @@ const log = require("./logger");
 const passport = require("passport");
 const cloudinary = require("cloudinary");
 const passportSetup = require("./utils/passport");
+const path = require("path");
 
 require("dotenv").config();
 require("./utils/mongodb");
