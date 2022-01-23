@@ -138,7 +138,7 @@ const Login = () => {
                 id="login_button"
                 type="button"
                 className="btn btn-block btn-facebook py-3 mb-2 mt-0"
-                disabled={loading}
+                disabled={true}
                 onClick={onLoginFacebook}
               >
                 <i class="fab fa-facebook"></i> FACEBOOK
