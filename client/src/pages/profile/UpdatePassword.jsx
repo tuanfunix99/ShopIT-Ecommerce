@@ -52,7 +52,7 @@ const UpdatePassword = () => {
     <Fragment>
       <Header />
       <MetaData title={"Change Password"} />
-      <AccessPage googleId={user && user.googleId}>
+      <AccessPage passportId={user && user.passportId}>
         <div className="row wrapper">
           <div className="col-10 col-lg-5">
             <form className="shadow-lg" onSubmit={submitHandler}>

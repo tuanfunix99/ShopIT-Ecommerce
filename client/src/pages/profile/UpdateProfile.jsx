@@ -108,18 +108,20 @@ const UpdateProfile = ({ history }) => {
                 disabled={loading}
               />
 
-              <FormInput
-                label="email"
-                id={"email_field"}
-                type="email"
-                name="email"
-                value={email ? email : ""}
-                required={true}
-                error={errors && errors.email ? errors.email : null}
-                isInvalid={errors && errors.email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={loading}
-              />
+              {user && !user.passportId && (
+                <FormInput
+                  label="email"
+                  id={"email_field"}
+                  type="email"
+                  name="email"
+                  value={email ? email : ""}
+                  required={true}
+                  error={errors && errors.email ? errors.email : null}
+                  isInvalid={errors && errors.email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={loading}
+                />
+              )}
 
               <div className="form-group">
                 <label htmlFor="avatar_upload">Avatar</label>

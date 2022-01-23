@@ -1,3 +1,11 @@
 .control-arrow:hover {
-    background: rgba(255, 255, 255, 0) !important;
+  background: rgba(255, 255, 255, 0) !important;
+}
+
+.carousel.control-next.control-arrow:before {
+  border-left: 8px solid rgb(8, 8, 8);
+}
+
+.carousel-status {
+  display: none;
 }

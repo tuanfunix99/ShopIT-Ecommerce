@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import "./Access.css";
 
-const AccessPage = ({ children, googleId }) => {
+const AccessPage = ({ children, passportId }) => {
   const { user } = useSelector((state) => state.user);
 
   const templateAlert = (title, message) => {
@@ -24,9 +24,9 @@ const AccessPage = ({ children, googleId }) => {
 
   return (
     <Fragment>
-      {user && !googleId && children}
+      {user && !passportId && children}
       {user &&
-        googleId &&
+        passportId &&
         templateAlert("ACCESS DENIDED", "Account not support this feature.")}
       {!user &&
         templateAlert("ACCESS DENIDED", "Please login to access pages.")}

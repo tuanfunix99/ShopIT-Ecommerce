@@ -35,11 +35,15 @@ const Profile = () => {
           </div>
 
           <div className="col-12 col-md-5">
-            <h4>Full Name</h4>
+            <h4>Username</h4>
             <p>{user && user.username}</p>
 
-            <h4>Email Address</h4>
-            <p>{user && user.email}</p>
+            {user && !user.passportId && (
+              <Fragment>
+                <h4>Email Address</h4>
+                <p>{user && user.email}</p>
+              </Fragment>
+            )}
 
             <h4>Joined On</h4>
             <p>{user && String(user.createdAt).substring(0, 10)}</p>
@@ -51,7 +55,7 @@ const Profile = () => {
                 </Link>
               </Permission>
             )}
-            {user && !user.googleId && (
+            {user && !user.passportId && (
               <Link
                 to="/password/update"
                 className="btn btn-primary btn-block mt-3"

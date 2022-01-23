@@ -57,6 +57,11 @@ const Login = () => {
     window.location.replace(origin + "/auth/google");
   };
 
+  const onLoginFacebook = () =>{
+    const origin = window.location.origin;
+    window.location.replace(origin + "/auth/facebook");
+  };
+
   const onChangeHandler = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
@@ -128,6 +133,15 @@ const Login = () => {
                 onClick={onLoginGoogle}
               >
                 <i className="fab fa-google"></i> GOOGLE
+              </Button>
+              <Button
+                id="login_button"
+                type="button"
+                className="btn btn-block btn-facebook py-3 mb-2 mt-0"
+                disabled={loading}
+                onClick={onLoginFacebook}
+              >
+                <i class="fab fa-facebook"></i> FACEBOOK
               </Button>
               <Link to="/signup" className="mt-3 py-3">
                 Don't have account? Create a new account.
