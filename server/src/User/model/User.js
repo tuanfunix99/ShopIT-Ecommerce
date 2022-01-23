@@ -46,7 +46,7 @@ const UserSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    googleId: {
+    passportId: {
       type: String,
       default: null,
     },

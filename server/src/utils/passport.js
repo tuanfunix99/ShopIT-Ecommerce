@@ -1,6 +1,8 @@
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const FacebookStrategy = require("passport-facebook").Strategy;
 const passport = require("passport");
 const User = require("../User/model/User");
+const log = require("../logger");
 
 passport.use(
   new GoogleStrategy(
@@ -12,28 +14,56 @@ passport.use(
     },
     async function (accessToken, refreshToken, profile, done) {
       try {
-        const user = await User.findOne({ googleId: profile.id });
+        const id = profile.id + "gg";
+        const user = await User.findOne({ passportId: id });
         if (user) {
           done(null, user);
         } else {
           const newUser = await User.create({
-            email: profile.email,
             username: profile.displayName,
-            email: profile.emails[0].value,
+            email: id + "@ecommerce.shopIt.com",
             avatar: {
               url: profile.photos[0].value,
             },
             isActive: true,
-            googleId: profile.id,
+            passportId: id,
           });
           done(null, newUser);
         }
       } catch (error) {
-        if (error.name === "MongoServerError" && error.code === 11000) {
-          //"Your email address has been already used. Please try login again."
+        log.error({ error: error.message }, "Error Passport Google");
+      }
+    }
+  )
+);
+
+passport.use(
+  new FacebookStrategy(
+    {
+      clientID: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+      callbackURL: "/auth/facebook/callback",
+    },
+    async function (accessToken, refreshToken, profile, cb) {
+      try {
+        const id = profile.id + "fb";
+        const user = await User.findOne({ passportId: id });
+        if (user) {
+          done(null, user);
         } else {
-          //"Error system. Please try login again."
+          const newUser = await User.create({
+            username: "user",
+            email: id + "@ecommerce.shopIt.com",
+            avatar: {
+              url: "/images/default_avatar.jpg",
+            },
+            isActive: true,
+            passportId: id,
+          });
+          done(null, newUser);
         }
+      } catch (error) {
+        log.error({ error: error.message }, "Error Passport Facebook");
       }
     }
   )
