@@ -1,12 +1,13 @@
 import React from "react";
 import { Fragment } from "react";
-import { Link, Route } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Search from "../search/Search";
 import Permission from "../permission/Permission";
 import { useSelector } from "react-redux";
 
 const Header = () => {
   const { user } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   return (
     <Fragment>
       <nav className="navbar row">
@@ -19,7 +20,7 @@ const Header = () => {
         </div>
 
         <div className="col-12 col-md-6 mt-2 mt-md-0">
-          <Search history={""} />
+          <Search navigate={navigate} />
           {/* <Route render={({ history }) => <Search history={history} />} /> */}
         </div>
 

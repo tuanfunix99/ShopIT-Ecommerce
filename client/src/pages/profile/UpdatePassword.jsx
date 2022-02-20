@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import FormInput from "../../components/ui/input/FormInput";
 import Button from "../../components/ui/button/Button";
 import Toast from "../../utils/Toast";
-import allActions from "../../actions/index";
+import allActions from "../../store/actions/index";
 import AccessPage from "../../components/access/AccessPage";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
@@ -50,9 +50,9 @@ const UpdatePassword = () => {
 
   return (
     <Fragment>
+      <AccessPage passportId={user && user.passportId}>
       <Header />
       <MetaData title={"Change Password"} />
-      <AccessPage passportId={user && user.passportId}>
         <div className="row wrapper">
           <div className="col-10 col-lg-5">
             <form className="shadow-lg" onSubmit={submitHandler}>

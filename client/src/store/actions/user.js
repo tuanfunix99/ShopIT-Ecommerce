@@ -5,7 +5,7 @@ import {
   loginApi,
   signupApi,
   updateProfileApi,
-} from "../api/user";
+} from "../../api/user";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const fetchUser = createAsyncThunk(

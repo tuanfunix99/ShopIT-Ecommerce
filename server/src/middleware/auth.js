@@ -1,5 +1,5 @@
-const User = require("../User/model/User");
-const log = require("../logger");
+const User = require("../User/models/User");
+const log = require("../utils/logger");
 const jwt = require("jsonwebtoken");
 
 require("dotenv").config();
@@ -13,6 +13,9 @@ exports.authenticate = async (req, res, next) => {
       }
       const { _id } = jwt.verify(token, process.env.JWT_PRIVATE_KEY);
       const user = await User.findById(_id);
+      if (!user) {
+        throw new Error("User not found");
+      }
       if (!user.isActive) {
         throw new Error("User not active");
       }

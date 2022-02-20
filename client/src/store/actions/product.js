@@ -1,13 +1,17 @@
 import { productActions } from "../reducers/product";
-import { fetchAllProductApi, fetchProductApi } from "../api/product";
+import {
+  createProductApi,
+  fetchAllProductApi,
+  fetchProductApi,
+} from "../../api/product";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const fetchAllProduct = createAsyncThunk(
   "product/fetchAllProduct",
-  async (_, { dispatch }) => {
+  async (input, { dispatch }) => {
     dispatch(productActions.load());
     try {
-      const { data } = await fetchAllProductApi();
+      const { data } = await fetchAllProductApi(input);
       dispatch(productActions.fetchAllProduct(data));
       dispatch(productActions.clear());
     } catch (error) {
@@ -30,10 +34,29 @@ const fetchProduct = createAsyncThunk(
   }
 );
 
+const createProduct = createAsyncThunk(
+  "product/createProduct",
+  async (product, { dispatch }) => {
+    dispatch(productActions.load());
+    try {
+      const { data } = await createProductApi(product);
+      dispatch(productActions.createProduct(data));
+      dispatch(productActions.clear());
+    } catch (error) {
+      dispatch(productActions.clear());
+    }
+  }
+);
+
+const clear = createAsyncThunk("product/clear", async (_, { dispatch }) => {
+  dispatch(productActions.clear());
+});
 
 const userActs = {
   fetchAllProduct,
-  fetchProduct
+  fetchProduct,
+  createProduct,
+  clear
 };
 
 export default userActs;

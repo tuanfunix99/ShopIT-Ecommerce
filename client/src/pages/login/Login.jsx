@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Loader from "../../components/loader/Loader";
 import MetaData from "../../components/meta-data/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "../../components/header/Header";
@@ -8,7 +7,7 @@ import Footer from "../../components/footer/Footer";
 import FormInput from "../../components/ui/input/FormInput";
 import Button from "../../components/ui/button/Button";
 import Toast from "../../utils/Toast";
-import allActions from "../../actions/index";
+import allActions from "../../store/actions/index";
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -141,7 +140,7 @@ const Login = () => {
                 disabled={true}
                 onClick={onLoginFacebook}
               >
-                <i class="fab fa-facebook"></i> FACEBOOK
+                <i className="fab fa-facebook"></i> FACEBOOK
               </Button>
               <Link to="/signup" className="mt-3 py-3">
                 Don't have account? Create a new account.

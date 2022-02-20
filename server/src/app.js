@@ -1,17 +1,17 @@
 const express = require("express");
 const cors = require("cors");
-const { ProductRoutes, UserRoutes } = require("./index.routes");
+const { ProductRoutes, UserRoutes, OrderRoutes } = require("./index.routes");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
-const log = require("./logger");
+const log = require("./utils/logger");
 const passport = require("passport");
 const cloudinary = require("cloudinary");
-const passportSetup = require("./utils/passport");
 const path = require("path");
 
 require("dotenv").config();
 require("./utils/mongodb");
+require("./utils/passport");
 
 const PORT = process.env.PORT || 5000;
 
@@ -76,6 +76,7 @@ app.get(
 
 app.use("/api/v1/user", UserRoutes);
 app.use("/api/v1/products", ProductRoutes);
+app.use("/api/v1/order", OrderRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../../client/build")));

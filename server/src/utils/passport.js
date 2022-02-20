@@ -1,8 +1,8 @@
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
 const passport = require("passport");
-const User = require("../User/model/User");
-const log = require("../logger");
+const User = require("../User/models/User");
+const log = require("./logger");
 
 passport.use(
   new GoogleStrategy(
@@ -14,19 +14,19 @@ passport.use(
     },
     async function (accessToken, refreshToken, profile, done) {
       try {
-        const id = profile.id + "gg";
-        const user = await User.findOne({ passportId: id });
+        const email = profile.emails[0].value.split("@")[0] + "@ecommerce.shopIt.com";
+        const user = await User.findOne({ passportId: profile.id });
         if (user) {
           done(null, user);
         } else {
           const newUser = await User.create({
             username: profile.displayName,
-            email: id + "@ecommerce.shopIt.com",
+            email: email,
             avatar: {
               url: profile.photos[0].value,
             },
             isActive: true,
-            passportId: id,
+            passportId: profile.id,
           });
           done(null, newUser);
         }
@@ -51,16 +51,17 @@ passport.use(
         if (user) {
           done(null, user);
         } else {
-          const newUser = await User.create({
-            username: "user",
-            email: id + "@ecommerce.shopIt.com",
-            avatar: {
-              url: "/images/default_avatar.jpg",
-            },
-            isActive: true,
-            passportId: id,
-          });
-          done(null, newUser);
+          console.log(profile);
+          // const newUser = await User.create({
+          //   username: "user",
+          //   email: id + "@ecommerce.shopIt.com",
+          //   avatar: {
+          //     url: "/images/default_avatar.jpg",
+          //   },
+          //   isActive: true,
+          //   passportId: id,
+          // });
+          // done(null, newUser);
         }
       } catch (error) {
         log.error({ error: error.message }, "Error Passport Facebook");

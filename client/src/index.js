@@ -3,9 +3,10 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
-import { store } from "./app/store";
+import { store } from "./store/store";
 import 'react-toastify/dist/ReactToastify.css';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import 'rc-slider/assets/index.css';
 
 ReactDOM.render(
   <Provider store={store}>

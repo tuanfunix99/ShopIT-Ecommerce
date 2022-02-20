@@ -15,6 +15,9 @@ const productSlice = createSlice({
     fetchProduct(state, action) {
       return { ...state, product: action.payload };
     },
+    createProduct(state, action) {
+      return { ...state, isCompleted: action.payload };
+    },
     error(state, action) {
       return { ...state, error: action.payload };
     },

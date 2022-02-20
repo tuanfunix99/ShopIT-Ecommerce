@@ -11,7 +11,6 @@ const UserSchema = new Schema(
   {
     username: {
       type: String,
-      unique: true,
       required: [true, "Please enter your username"],
       maxLength: [30, "Your name cannot exceed 30 characters"],
     },

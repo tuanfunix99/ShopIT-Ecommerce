@@ -3,8 +3,16 @@ import { useSelector } from "react-redux";
 
 import "./Access.css";
 
-const AccessPage = ({ children, passportId }) => {
+const AccessPage = ({ children, passportId, roles }) => {
   const { user } = useSelector((state) => state.user);
+
+  let isRole = false;
+
+  if (user && roles && roles.length > 0) {
+    if (roles.includes(user.role)) {
+      isRole = true;
+    }
+  }
 
   const templateAlert = (title, message) => {
     return (
@@ -24,12 +32,15 @@ const AccessPage = ({ children, passportId }) => {
 
   return (
     <Fragment>
-      {user && !passportId && children}
+      {!user &&
+        templateAlert("ACCESS DENIDED", "Please login to access pages.")}
       {user &&
         passportId &&
         templateAlert("ACCESS DENIDED", "Account not support this feature.")}
-      {!user &&
-        templateAlert("ACCESS DENIDED", "Please login to access pages.")}
+      {user &&
+        !isRole &&
+        templateAlert("ACCESS DENIDED", "Account not permitted")}
+      {user && !passportId && children}
     </Fragment>
   );
 };

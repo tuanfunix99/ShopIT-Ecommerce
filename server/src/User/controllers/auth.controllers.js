@@ -1,13 +1,14 @@
-const User = require("./model/User");
-const log = require("../logger");
-const { sendmail } = require("../utils/sendmail");
+const User = require("../models/User");
+const log = require("../../utils/logger");
 const jwt = require("jsonwebtoken");
-const { uploadToCloudinary } = require("../utils/cloudinary");
+const { sendmail } = require("../../utils/sendmail");
+const { uploadToCloudinary } = require("../../utils/cloudinary");
+const { handleValidationError, handleMongoServerErrorUnique } = require("../../utils/error");
 
 require("dotenv").config();
 
 exports.signup = async (req, res) => {
-  const errors = {};
+  let errors = {};
   const { username, email, password, avatar } = req.body;
   try {
     const user = await User.create({ username, email, password });
@@ -26,19 +27,13 @@ exports.signup = async (req, res) => {
     res.status(200).send(true);
   } catch (error) {
     if (error.name === "ValidationError") {
-      for (const property in error.errors) {
-        if (error.errors[property].kind === "unique") {
-          continue;
-        }
-        errors[property] = error.errors[property].message;
-      }
+      errors = handleValidationError(error, errors);
     } else if (error.name === "MongoServerError" && error.code === 11000) {
-      const property = Object.keys(error.keyPattern)[0];
-      errors[property] = `${property} is already taken`;
+      errors = handleMongoServerErrorUnique(error, errors);
     } else {
-      errors.system = "Error System";
+      errors.system = error.message;
     }
-    log.error({ error: error.message }, "error signup");
+    log.error({ error: errors }, "error signup");
     res.status(400).send({ error: errors });
   }
 };
@@ -64,7 +59,7 @@ exports.activeAccount = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const errors = {};
+  let errors = {};
   req.logout();
   req.session.token = null;
   try {
@@ -75,13 +70,11 @@ exports.login = async (req, res) => {
     res.status(200).send(true);
   } catch (error) {
     if (error.name === "ValidationError") {
-      for (const property in error.errors) {
-        errors[property] = error.errors[property].message;
-      }
+     errors = handleValidationError(error, errors);
     } else {
-      errors.system = "Error System";
+      errors.system = error.message;
     }
-    log.error({ error: error.message }, "error login");
+    log.error({ error: errors }, "error login");
     res.status(400).send({ error: errors });
   }
 };

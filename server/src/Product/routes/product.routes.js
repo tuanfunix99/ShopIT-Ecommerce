@@ -6,9 +6,9 @@ const {
   updateProduct,
   createAll,
   deleteProduct,
-} = require("./product.controllers");
+} = require("../controllers/product.controllers");
 
-const { authenticate, authorizaRoles } = require("../middleware/auth");
+const { authenticate, authorizaRoles } = require("../../middleware/auth");
 
 const router = Router();
 

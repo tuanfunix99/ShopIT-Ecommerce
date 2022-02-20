@@ -3,7 +3,7 @@ import MetaData from "../../components/meta-data/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
-import allActions from "../../actions/index";
+import allActions from "../../store/actions/index";
 import FormInput from "../../components/ui/input/FormInput";
 import Button from "../../components/ui/button/Button";
 import Toast from "../../utils/Toast";

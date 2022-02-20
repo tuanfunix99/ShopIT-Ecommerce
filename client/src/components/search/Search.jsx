@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 
-const Search = ({ history }) => {
+const Search = ({ navigate }) => {
   const [keyword, setKeyword] = useState("");
 
   const searchHandler = (e) => {
     e.preventDefault();
-
-    if (keyword.trim()) {
-      history.push(`/search/${keyword}`);
+    if (keyword.trim().length > 0) {
+      navigate(`/search/${keyword}`);
     } else {
-      history.push("/");
+      navigate("/");
     }
   };
 

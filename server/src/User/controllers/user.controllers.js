@@ -1,20 +1,26 @@
-const User = require("./model/User");
-const log = require("../logger");
+const User = require("../models/User");
+const log = require("../../utils/logger");
+const bcrypt = require("bcrypt");
 const {
   uploadToCloudinary,
   destroyCloudinary,
-} = require("../utils/cloudinary");
-const bcrypt = require("bcrypt");
+} = require("../../utils/cloudinary");
 const { Error } = require("mongoose");
+const { handleValidationError, handleMongoServerErrorUnique } = require("../../utils/error");
 
 require("dotenv").config();
 
 exports.getUser = (req, res) => {
-  res.status(200).send(req.user);
+  try {
+    res.status(200).send(req.user);
+  } catch (error) {
+    log.error({ error: error.message }, "error get user");
+    res.status(500).send({ error: error.message });
+  }
 };
 
 exports.updateProfile = async (req, res) => {
-  const errors = {};
+  let errors = {};
   const { id, username, email, avatar } = req.body;
   try {
     if (req.user._id != id) {
@@ -53,25 +59,19 @@ exports.updateProfile = async (req, res) => {
     res.status(200).send(true);
   } catch (error) {
     if (error.name === "ValidationError") {
-      for (const property in error.errors) {
-        if (error.errors[property].kind === "unique") {
-          continue;
-        }
-        errors[property] = error.errors[property].message;
-      }
+      erros = handleValidationError(error, errors);
     } else if (error.name === "MongoServerError" && error.code === 11000) {
-      const property = Object.keys(error.keyPattern)[0];
-      errors[property] = `${property} is already taken`;
+      errors = handleMongoServerErrorUnique(error, errors);
     } else {
       errors.system = error.message;
     }
-    log.error({ error: error.message }, "error signup");
+    log.error({ error: errors }, "error update profile");
     res.status(400).send({ error: errors });
   }
 };
 
 exports.changePassword = async (req, res) => {
-  const errors = {};
+  let errors = {};
   const { id, oldPassword, password } = req.body;
   let error = new Error.ValidationError();
   try {
@@ -106,16 +106,11 @@ exports.changePassword = async (req, res) => {
     res.status(200).send(true);
   } catch (error) {
     if (error.name === "ValidationError") {
-      for (const property in error.errors) {
-        if (error.errors[property].kind === "unique") {
-          continue;
-        }
-        errors[property] = error.errors[property].message;
-      }
+     erros = handleValidationError(error, errors);
     } else {
       errors.system = error.message;
     }
-    log.error({ error: error.message }, "error signup");
+    log.error({ error: errors }, "error change password");
     res.status(400).send({ error: errors });
   }
 };

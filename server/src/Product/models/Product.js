@@ -7,7 +7,7 @@ const ProductSchema = new Schema(
       type: String,
       required: [true, "Please enter product name"],
       trim: true,
-      maxlength: [100, "Product name cannot exceed 100 characters"],
+      maxlength: [300, "Product name cannot exceed 300 characters"],
     },
     price: {
       type: Number,
@@ -57,7 +57,7 @@ const ProductSchema = new Schema(
       type: String,
       required: [true, "Please enter product seller"],
     },
-    stocK: {
+    stock: {
       type: Number,
       required: [true, "Please enter product stocK"],
       default: 0,
@@ -73,7 +73,7 @@ const ProductSchema = new Schema(
           ref: "User",
           required: true,
         },
-        name: {
+        username: {
           type: String,
           required: true,
         },

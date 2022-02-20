@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -12,8 +12,8 @@ const Profile = () => {
   const { user } = useSelector((state) => state.user);
   return (
     <Fragment>
-      <Header />
       <AccessPage>
+      <Header />
         <MetaData title={"Your Profile"} />
         <h2 className="mt-5 ml-5">My Profile</h2>
         <div className="row justify-content-around mt-5 user-info">

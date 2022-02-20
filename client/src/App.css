@@ -26,7 +26,15 @@ body {
   border-radius: 5px;
 }
 
-.main{
+.active-item {
+  color: #fa9c23;
+}
+
+.item{
+  color: #2e2e2e;
+}
+
+.main {
   min-height: 350px;
 }
 

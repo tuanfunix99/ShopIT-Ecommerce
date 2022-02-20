@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import MetaData from "../../components/meta-data/MetaData";
 import { useDispatch, useSelector } from "react-redux";
-import allActions from "../../actions/index";
+import allActions from "../../store/actions/index";
 import FormInput from "../../components/ui/input/FormInput";
 import Button from "../../components/ui/button/Button";
 import Toast from "../../utils/Toast";
