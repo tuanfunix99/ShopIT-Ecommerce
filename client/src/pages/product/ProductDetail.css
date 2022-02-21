@@ -9,3 +9,7 @@
 .carousel-status {
   display: none;
 }
+
+ul.slider.animated li img {
+  width: 250px !important;
+}

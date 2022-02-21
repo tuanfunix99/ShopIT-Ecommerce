@@ -27,7 +27,7 @@ const ProductDetails = () => {
 
   const onIncreaseQuantity = () => {
     if (quantity >= 10) {
-      alert('Product just choose max 10 item');
+      alert("Product just choose max 10 item");
       setQuantity(10);
     } else {
       if (product && product.stock - quantity > 0) {
@@ -61,9 +61,9 @@ const ProductDetails = () => {
       {product && !loading && (
         <Fragment>
           <MetaData title={product.name} />
-          <div className="row d-flex justify-content-around">
+          <div className="row d-flex justify-content-around px-5">
             <div className="col-12 col-lg-5 img-fluid" id="product_image">
-              <Carousel>
+              <Carousel verticalSwipe="vertical">
                 {product.images &&
                   product.images.map((image, key) => (
                     <Fragment key={key}>
@@ -91,38 +91,41 @@ const ProductDetails = () => {
                 <hr />
 
                 <p id="product_price">${product.price}</p>
-                <div className="stockCounter d-inline">
-                  <span
-                    className="btn btn-danger minus"
-                    onClick={onDecreaseQuantity}
-                  >
-                    -
-                  </span>
-                  <input
-                    type="number"
-                    className="form-control count d-inline"
-                    value={quantity}
-                    readOnly
-                  />
-                  <span
-                    className="btn btn-primary plus"
-                    onClick={onIncreaseQuantity}
-                  >
-                    +
-                  </span>
-                </div>
-                <button
-                  type="button"
-                  id="cart_btn"
-                  className="btn btn-primary d-inline ml-4"
-                  disabled={product.stock === 0}
-                  onClick={onClickAddToCartHandler}
-                >
-                  Add to Cart
-                </button>
+                {user && (
+                  <Fragment>
+                    <div className="stockCounter d-inline">
+                      <span
+                        className="btn btn-danger minus"
+                        onClick={onDecreaseQuantity}
+                      >
+                        -
+                      </span>
+                      <input
+                        type="number"
+                        className="form-control count d-inline"
+                        value={quantity}
+                        readOnly
+                      />
+                      <span
+                        className="btn btn-primary plus"
+                        onClick={onIncreaseQuantity}
+                      >
+                        +
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      id="cart_btn"
+                      className="btn btn-primary d-inline ml-4"
+                      disabled={product.stock === 0}
+                      onClick={onClickAddToCartHandler}
+                    >
+                      Add to Cart
+                    </button>
 
-                <hr />
-
+                    <hr />
+                  </Fragment>
+                )}
                 <p>
                   Status:{" "}
                   <span

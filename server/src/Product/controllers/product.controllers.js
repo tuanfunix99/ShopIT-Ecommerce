@@ -3,6 +3,7 @@ const log = require("../../utils/logger");
 const { Error } = require("mongoose");
 const QueryFeatures = require("../../utils/QueryFeatures");
 const { uploadToCloudinary } = require("../../utils/cloudinary");
+const { handleValidationError } = require("../../utils/error");
 
 exports.getAllProduct = async (req, res) => {
   try {
@@ -46,7 +47,7 @@ exports.createAll = async (req, res) => {
 };
 
 exports.createNewProduct = async (req, res) => {
-  const errors = {};
+  let errors = {};
   try {
     const imagesLinks = [];
     const images = req.body.images;
@@ -68,9 +69,7 @@ exports.createNewProduct = async (req, res) => {
     res.status(200).send(true);
   } catch (error) {
     if (error.name === "ValidationError") {
-      for (let property in error.errors) {
-        errors[property] = error.errors[property].message;
-      }
+      handleValidationError(error, errors);
     } else {
       errors.system = error.message;
     }
