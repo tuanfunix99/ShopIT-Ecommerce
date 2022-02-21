@@ -25,6 +25,35 @@ const ProductDetails = () => {
     dispatch(allActions.productActs.fetchProduct(id));
   }, [dispatch, id]);
 
+  const onIncreaseQuantity = () => {
+    if (quantity >= 10) {
+      alert('Product just choose max 10 item');
+      setQuantity(10);
+    } else {
+      if (product && product.stock - quantity > 0) {
+        setQuantity(quantity + 1);
+      }
+    }
+  };
+
+  const onDecreaseQuantity = () => {
+    if (product && product.stock - 1 > 0) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const onClickAddToCartHandler = () => {
+    const cartItem = {
+      name: product && product.name,
+      stock: product && product.stock,
+      product: product && product._id,
+      price: product && product.price,
+      image: product && product.images[0].url,
+      quantity: quantity,
+    };
+    dispatch(allActions.cartAcs.addToCart(cartItem));
+  };
+
   return (
     <Fragment>
       <Header />
@@ -36,10 +65,10 @@ const ProductDetails = () => {
             <div className="col-12 col-lg-5 img-fluid" id="product_image">
               <Carousel>
                 {product.images &&
-                  product.images.map((image) => (
-                    <div>
+                  product.images.map((image, key) => (
+                    <Fragment key={key}>
                       <img src={image.url} alt={product.title} />
-                    </div>
+                    </Fragment>
                   ))}
               </Carousel>
             </div>
@@ -63,22 +92,31 @@ const ProductDetails = () => {
 
                 <p id="product_price">${product.price}</p>
                 <div className="stockCounter d-inline">
-                  <span className="btn btn-danger minus">-</span>
-
+                  <span
+                    className="btn btn-danger minus"
+                    onClick={onDecreaseQuantity}
+                  >
+                    -
+                  </span>
                   <input
                     type="number"
                     className="form-control count d-inline"
                     value={quantity}
                     readOnly
                   />
-
-                  <span className="btn btn-primary plus">+</span>
+                  <span
+                    className="btn btn-primary plus"
+                    onClick={onIncreaseQuantity}
+                  >
+                    +
+                  </span>
                 </div>
                 <button
                   type="button"
                   id="cart_btn"
                   className="btn btn-primary d-inline ml-4"
                   disabled={product.stock === 0}
+                  onClick={onClickAddToCartHandler}
                 >
                   Add to Cart
                 </button>

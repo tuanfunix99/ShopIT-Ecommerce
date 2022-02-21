@@ -15,6 +15,7 @@ import NotFound from "./pages/not-found/NotFound";
 import Search from "./pages/search/Search";
 import Dashboard from "./pages/admin/Dashboard";
 import NewProduct from "./pages/admin/NewProduct";
+import Cart from "./pages/cart/Cart";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,9 +36,11 @@ function App() {
             <Route path="/me" element={<Profile />} />
             <Route path="/me/update" element={<UpdateProfile />} />
             <Route path="/password/update" element={<UpdatePassword />} />
-            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/products/:id" element={<ProductDetails />} />
             <Route path="/*" element={<NotFound />} />
 
+            <Route path="/cart" element={<Cart />} />
+            
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/admin/product" element={<NewProduct />} />
           </Routes>

@@ -50,9 +50,12 @@ const UpdatePassword = () => {
 
   return (
     <Fragment>
-      <AccessPage passportId={user && user.passportId}>
-      <Header />
-      <MetaData title={"Change Password"} />
+      <AccessPage
+        passportId={user && user.passportId}
+        roles={["user", "admin"]}
+      >
+        <Header />
+        <MetaData title={"Change Password"} />
         <div className="row wrapper">
           <div className="col-10 col-lg-5">
             <form className="shadow-lg" onSubmit={submitHandler}>

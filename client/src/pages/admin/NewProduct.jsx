@@ -50,8 +50,6 @@ const NewProduct = () => {
   };
 
   const onUploadFileImage = (e) => {
-    setImages([]);
-    setImagesPreview([]);
     const files = Array.from(e.target.files);
     const types = ["image/jpeg", "image/jpg", "image/png"];
     files.forEach((file) => {

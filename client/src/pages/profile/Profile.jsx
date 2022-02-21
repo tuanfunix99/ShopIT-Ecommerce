@@ -12,7 +12,7 @@ const Profile = () => {
   const { user } = useSelector((state) => state.user);
   return (
     <Fragment>
-      <AccessPage>
+      <AccessPage roles={["user", "admin"]}>
       <Header />
         <MetaData title={"Your Profile"} />
         <h2 className="mt-5 ml-5">My Profile</h2>

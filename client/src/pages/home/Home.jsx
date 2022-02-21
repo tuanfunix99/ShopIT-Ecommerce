@@ -35,8 +35,6 @@ const Home = () => {
     setCurrentPage(pageNumber);
   };
 
-  console.log(products);
-
   return (
     <Fragment>
       <Header />
@@ -51,7 +49,7 @@ const Home = () => {
             <Pagination
               activePage={currentPage}
               itemsCountPerPage={6}
-              totalItemsCount={products && products.count}
+              totalItemsCount={products ? products.count : 0}
               onChange={setCurrentPageNo}
               nextPageText={"Next"}
               prevPageText={"Prev"}

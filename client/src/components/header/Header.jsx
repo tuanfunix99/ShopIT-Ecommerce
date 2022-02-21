@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
   const { user } = useSelector((state) => state.user);
+  const { carts } = useSelector((state) => state.cart);
   const navigate = useNavigate();
   return (
     <Fragment>
@@ -30,7 +31,7 @@ const Header = () => {
               Cart
             </span>
             <span className="ml-1" id="cart_count">
-              0
+            { carts }
             </span>
           </Link>
 

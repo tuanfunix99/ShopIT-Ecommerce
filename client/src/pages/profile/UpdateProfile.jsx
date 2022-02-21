@@ -9,7 +9,7 @@ import Header from "../../components/header/Header";
 import AccessPage from "../../components/access/AccessPage";
 import Footer from "../../components/footer/Footer";
 
-const UpdateProfile = ({ history }) => {
+const UpdateProfile = () => {
   const [username, setUsername] = useState(null);
   const [email, setEmail] = useState(null);
   const [avatar, setAvatar] = useState(null);
@@ -84,7 +84,7 @@ const UpdateProfile = ({ history }) => {
     <Fragment>
       <Header />
       {Toast.container()}
-      <AccessPage>
+      <AccessPage roles={["user", "admin"]}>
         <MetaData title={"Update Profile"} />
         <div className="row wrapper">
           <div className="col-10 col-lg-5">
