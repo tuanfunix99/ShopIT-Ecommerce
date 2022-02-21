@@ -43,7 +43,10 @@ const createProduct = createAsyncThunk(
       dispatch(productActions.createProduct(data));
       dispatch(productActions.clear());
     } catch (error) {
-      dispatch(productActions.clear());
+      if (error.response && error.response.data) {
+        dispatch(productActions.clear());
+        dispatch(productActions.error(error.response.data.error));
+      }
     }
   }
 );

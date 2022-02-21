@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.timeout = 2000;
+// axios.defaults.timeout = 2000;
 
 export const fetchUserApi = () => axios.get("/api/v1/user/");
 

@@ -16,7 +16,7 @@ const NewProduct = () => {
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
 
-  const { loading, isCompleted } = useSelector((state) => state.product);
+  const { loading, isCompleted, error } = useSelector((state) => state.product);
   const dispatch = useDispatch();
 
   const categories = [
@@ -36,6 +36,7 @@ const NewProduct = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    dispatch(allActions.productActs.clear());
     dispatch(
       allActions.productActs.createProduct({
         name,
@@ -83,6 +84,12 @@ const NewProduct = () => {
     Toast.success("Upload new product success");
   }
 
+  if(error){
+    if(error.system){
+      Toast.error("Error system can't upload new product");
+    }
+  }
+
   return (
     <AdminLayout>
       <div className="col-lg-6 col-md-8 mx-auto my-3">
@@ -99,6 +106,8 @@ const NewProduct = () => {
             onChange={(e) => setName(e.target.value)}
             required={true}
             disabled={loading}
+            isInvalid={error && error.name}
+            error={error && error.name ? error.name : null}
           />
           <FormInput
             label="price"
@@ -107,6 +116,8 @@ const NewProduct = () => {
             onChange={(e) => setPrice(e.target.value)}
             required={true}
             disabled={loading}
+            isInvalid={error && error.price}
+            error={error && error.price ? error.price : null}
           />
           <FormInput
             label="stock"
@@ -117,6 +128,8 @@ const NewProduct = () => {
             onChange={(e) => setStock(e.target.value)}
             required={true}
             disabled={loading}
+            isInvalid={error && error.stock}
+            error={error && error.stock ? error.stock : null}
           />
           <FormInput
             label="description"
@@ -125,12 +138,17 @@ const NewProduct = () => {
             onChange={(e) => setDescription(e.target.value)}
             required={true}
             disabled={loading}
+            isInvalid={error && error.description}
+            error={error && error.description ? error.description : null}
           />
           <FormInput
             label="Category"
             select={true}
+            value={category}
             onChange={(e) => setCategory(e.target.value)}
             disabled={loading}
+            isInvalid={error && error.category}
+            error={error && error.category ? error.category : null}
           >
             {categories.map((category) => (
               <option key={category} value={category}>
@@ -145,6 +163,8 @@ const NewProduct = () => {
             onChange={(e) => setSeller(e.target.value)}
             required={true}
             disabled={loading}
+            isInvalid={error && error.seller}
+            error={error && error.seller ? error.seller : null}
           />
           <div className="form-group">
             <label>Images</label>
