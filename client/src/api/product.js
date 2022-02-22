@@ -5,7 +5,7 @@ import axios from "axios";
 export const fetchAllProductApi = ({
   page = 1,
   keyword = "",
-  price = [1, 1000],
+  price = [1, 10000],
   category,
 }) =>
   axios.get(

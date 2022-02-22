@@ -16,7 +16,7 @@ const Search = () => {
   const { products, loading } = useSelector((state) => state.product);
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([1, 1000]);
+  const [price, setPrice] = useState([1, 10000]);
   const [category, setCategory] = useState("");
   const createSliderWithTooltip = Slider.createSliderWithTooltip;
   const Range = createSliderWithTooltip(Slider.Range);
@@ -76,11 +76,11 @@ const Search = () => {
                   <Range
                     marks={{
                       1: `$1`,
-                      1000: `$1000`,
+                      10000: `$10000`,
                     }}
                     min={1}
-                    max={1000}
-                    defaultValue={[1, 1000]}
+                    max={10000}
+                    defaultValue={[1, 10000]}
                     tipFormatter={(value) => `$${value}`}
                     tipProps={{
                       placement: "top",
