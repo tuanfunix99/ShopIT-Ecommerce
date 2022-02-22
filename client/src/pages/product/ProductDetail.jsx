@@ -9,6 +9,7 @@ import Footer from "../../components/footer/Footer";
 import { Carousel } from "react-responsive-carousel";
 
 import "./ProductDetail.css";
+import Rating from "../../components/rating/Rating";
 
 const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
@@ -80,11 +81,14 @@ const ProductDetails = () => {
 
                 <hr />
 
-                <div className="rating-outer">
+                {/* <div className="rating-outer">
                   <div
                     className="rating-inner"
                     style={{ width: `${(product.ratings / 5) * 100}%` }}
                   ></div>
+                </div> */}
+                <div className="ratings">
+                  <Rating rating={product.ratings} />
                 </div>
                 <span id="no_of_reviews">({product.numOfReviews} Reviews)</span>
 
