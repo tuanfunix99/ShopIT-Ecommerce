@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { ProductRoutes, UserRoutes, OrderRoutes } = require("./index.routes");
+const { ProductRoutes, UserRoutes, OrderRoutes, PaymentRoutes } = require("./index.routes");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
@@ -77,6 +77,7 @@ app.get(
 app.use("/api/v1/user", UserRoutes);
 app.use("/api/v1/products", ProductRoutes);
 app.use("/api/v1/order", OrderRoutes);
+app.use("/api/v1/payment", PaymentRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../../client/build")));

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaSistrix } from "react-icons/fa";
 
 const Search = ({ navigate }) => {
   const [keyword, setKeyword] = useState("");
@@ -24,7 +25,7 @@ const Search = ({ navigate }) => {
         />
         <div className="input-group-append">
           <button id="search_btn" className="btn">
-            <i className="fa fa-search" aria-hidden="true"></i>
+            <FaSistrix />
           </button>
         </div>
       </div>

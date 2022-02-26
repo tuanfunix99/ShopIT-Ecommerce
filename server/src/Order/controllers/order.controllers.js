@@ -15,7 +15,7 @@ exports.createOrder = async (req, res) => {
     totalPrice,
   } = req.body;
   try {
-    const order = new Order({
+    await Order.create({
       shippingInfo,
       orderItems,
       paymentInfo,
@@ -26,7 +26,7 @@ exports.createOrder = async (req, res) => {
       user: req.user._id,
       paidAt: Date.now(),
     });
-    res.status(200).send(order);
+    res.status(200).send(true);
   } catch (error) {
     if (error.name === "ValidationError") {
       errors = handleValidationError(error, errors);
@@ -120,4 +120,4 @@ exports.deleteOrder = async (req, res) => {
     log.error({ error: error.message }, "error delete order");
     res.status(400).send({ error: error.message });
   }
-}
+};

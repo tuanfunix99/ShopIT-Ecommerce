@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import allActions from "./store/actions/index";
@@ -16,10 +16,16 @@ import Search from "./pages/search/Search";
 import Dashboard from "./pages/admin/Dashboard";
 import NewProduct from "./pages/admin/NewProduct";
 import Cart from "./pages/cart/Cart";
+import Shipping from "./pages/cart/Shipping";
+import ConfirmOrder from "./pages/cart/ConfirmOrder";
+import Toast from "./utils/Toast";
+import Payment from "./pages/cart/Payment";
+import OrderSuccess from "./pages/cart/OrderSuccess";
 
 function App() {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.user);
+
   useEffect(() => {
     dispatch(allActions.userActs.fetchUser());
   }, [dispatch]);
@@ -28,6 +34,7 @@ function App() {
     <Fragment>
       {!loading && (
         <div className="App">
+          {Toast.container()}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/search/:keyword" element={<Search />} />
@@ -40,7 +47,11 @@ function App() {
             <Route path="/*" element={<NotFound />} />
 
             <Route path="/cart" element={<Cart />} />
-            
+            <Route path="/shipping" element={<Shipping />} />
+            <Route path="/confirm-order" element={<ConfirmOrder />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/order-success" element={<OrderSuccess />} />
+
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/admin/product" element={<NewProduct />} />
           </Routes>

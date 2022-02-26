@@ -64,7 +64,7 @@ const ProductDetails = () => {
           <MetaData title={product.name} />
           <div className="row d-flex justify-content-around px-5">
             <div className="col-12 col-lg-5 img-fluid" id="product_image">
-              <Carousel verticalSwipe="vertical">
+              <Carousel>
                 {product.images &&
                   product.images.map((image, key) => (
                     <Fragment key={key}>
@@ -78,15 +78,7 @@ const ProductDetails = () => {
               <div className="product-info">
                 <h3>{product.name}</h3>
                 <p id="product_id">Product # {product._id}</p>
-
                 <hr />
-
-                {/* <div className="rating-outer">
-                  <div
-                    className="rating-inner"
-                    style={{ width: `${(product.ratings / 5) * 100}%` }}
-                  ></div>
-                </div> */}
                 <div className="ratings">
                   <Rating rating={product.ratings} />
                 </div>

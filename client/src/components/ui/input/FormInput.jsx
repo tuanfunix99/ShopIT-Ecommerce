@@ -29,7 +29,11 @@ const Input = ({
   return (
     <Fragment>
       <div className="form-group">
-        {label && <label htmlFor={id ? id : ""}>{label}</label>}
+        {label && (
+          <label htmlFor={id ? id : ""}>
+            <h6>{label}</h6>
+          </label>
+        )}
         {!textarea && !select && (
           <input
             type={type ? type : "text"}

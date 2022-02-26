@@ -119,7 +119,6 @@ const Register = () => {
     <Fragment>
       <MetaData title={"Signup"} />
       <Header />
-      {Toast.container()}
       <div className="row wrapper">
         <div className="col-10 col-lg-5">
           {!isSuccess && (

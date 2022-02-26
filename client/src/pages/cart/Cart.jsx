@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AccessPage from "../../components/access/AccessPage";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
@@ -10,6 +10,7 @@ import allActions from "../../store/actions";
 const Cart = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const removeCartItemHandler = (product) => {
     dispatch(allActions.cartAcs.deleteCartItem(product));
@@ -34,6 +35,12 @@ const Cart = () => {
       dispatch(allActions.cartAcs.updateQtyItem({ ...itemClone }));
     }
   };
+
+  const checkoutHandler = () => {
+    if(cartItems.length > 0) {
+      navigate('/shipping')
+    }
+  }
 
   return (
     <Fragment>
@@ -81,7 +88,6 @@ const Cart = () => {
                             >
                               -
                             </span>
-
                             <input
                               type="number"
                               className="form-control count d-inline"
@@ -143,7 +149,7 @@ const Cart = () => {
                   <button
                     id="checkout_btn"
                     className="btn btn-primary btn-block"
-                    //   onClick={checkoutHandler}
+                    onClick={checkoutHandler}
                   >
                     Check out
                   </button>

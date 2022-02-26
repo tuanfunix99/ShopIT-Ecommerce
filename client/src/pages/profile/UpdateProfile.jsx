@@ -83,7 +83,6 @@ const UpdateProfile = () => {
   return (
     <Fragment>
       <Header />
-      {Toast.container()}
       <AccessPage roles={["user", "admin"]}>
         <MetaData title={"Update Profile"} />
         <div className="row wrapper">

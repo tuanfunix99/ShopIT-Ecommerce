@@ -11,3 +11,7 @@
 label{
   text-transform: capitalize;
 }
+
+h6{
+  font-weight: 600;
+}
