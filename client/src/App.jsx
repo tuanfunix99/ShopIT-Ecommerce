@@ -21,6 +21,8 @@ import ConfirmOrder from "./pages/cart/ConfirmOrder";
 import Toast from "./utils/Toast";
 import Payment from "./pages/cart/Payment";
 import OrderSuccess from "./pages/cart/OrderSuccess";
+import ListOrders from "./pages/order/ListOrders";
+import OrderDetails from "./pages/order/OrderDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -51,6 +53,9 @@ function App() {
             <Route path="/confirm-order" element={<ConfirmOrder />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/order-success" element={<OrderSuccess />} />
+
+            <Route path="/orders/me" element={<ListOrders />} />
+            <Route path="/order/:id" element={<OrderDetails />} />
 
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/admin/product" element={<NewProduct />} />

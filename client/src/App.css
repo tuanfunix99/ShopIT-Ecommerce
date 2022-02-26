@@ -114,6 +114,11 @@ nav {
   height: 200px;
 }
 
+.cart-item img {
+  width: 100px;
+  height: 100px;
+}
+
 .ratings {
   font-size: 1.2rem;
   color: #fdcc0d;

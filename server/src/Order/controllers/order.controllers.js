@@ -45,6 +45,9 @@ exports.getSingleOrder = async (req, res) => {
     if (!order) {
       throw new Error("Order not found");
     }
+    if (order.user._id.toString() !== req.user._id.toString()) {
+      throw new Error("User not allowed");
+    }
     res.status(200).send(order);
   } catch (error) {
     log.error({ error: error.message }, "error get single order");
@@ -52,7 +55,7 @@ exports.getSingleOrder = async (req, res) => {
   }
 };
 
-exports.getMyorders = async (req, res) => {
+exports.getMyOrders = async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id }).populate(
       "user",
