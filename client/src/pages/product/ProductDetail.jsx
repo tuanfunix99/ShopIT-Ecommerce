@@ -216,7 +216,6 @@ const ProductDetails = () => {
                         size={100}
                         activeColor="#ffd700"
                       />
-                      ,
                       <textarea
                         name="review"
                         id="review"
