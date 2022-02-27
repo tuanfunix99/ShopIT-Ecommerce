@@ -30,7 +30,10 @@ exports.getAllProduct = async (req, res) => {
 
 exports.getProduct = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate(
+      "reviews.user",
+      "avatar username"
+    );
     if (!product) {
       throw new Error("Product not found");
     }
@@ -114,7 +117,7 @@ exports.addNewReview = async (req, res) => {
     if (!product) {
       throw new Error("Product not found");
     }
-    const isReview = product.reviews(
+    const isReview = product.reviews.find(
       (review) => review.user.toString() === req.user._id.toString()
     );
     if (isReview) {
@@ -125,17 +128,17 @@ exports.addNewReview = async (req, res) => {
         }
       });
     } else {
-      product.push({
+      product.reviews.push({
         user: req.user._id,
         username: req.user.username,
         rating: rating,
         comment: comment,
       });
+      product.numOfReviews += 1;
     }
     product.ratings =
       product.reviews.reduce((acc, item) => item.rating + acc, 0) /
       product.reviews.length;
-    product.numOfReviews += 1;
     await product.save({ validateBeforeSave: false });
     res.status(200).send(true);
   } catch (error) {
@@ -145,11 +148,11 @@ exports.addNewReview = async (req, res) => {
 };
 
 exports.getAllReviews = async (req, res) => {
-  const { productId } = req.query;
+  const { productId } = req.params;
   try {
     const product = await Product.findById(productId).populate(
       "reviews.user",
-      "avatar"
+      "avatar username"
     );
     if (!product) {
       throw new Error("Product not found");

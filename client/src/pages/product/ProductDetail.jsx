@@ -7,24 +7,45 @@ import allActions from "../../store/actions/index";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import { Carousel } from "react-responsive-carousel";
+import Rating from "../../components/rating/Rating";
+import Button from "../../components/ui/button/Button";
+import ListReviews from "./ListReviews";
+import Toast from "../../utils/Toast";
+import { Modal } from "react-bootstrap";
+import ReactStars from "react-rating-stars-component";
 
 import "./ProductDetail.css";
-import Rating from "../../components/rating/Rating";
 
 const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+  const [isReview, setIsReview] = useState(false);
+  const [dataDismiss, setDataDismiss] = useState(null);
+  const [ariaLabel, setAriaLabel] = useState(null);
+  const [showReviewModal, setShowReviewModal] = useState(false);
   const { id } = useParams();
 
   const dispatch = useDispatch();
 
-  const { loading, error, product } = useSelector((state) => state.product);
+  const { loading, product, isCompleted, error } = useSelector(
+    (state) => state.product
+  );
   const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
-    dispatch(allActions.productActs.fetchProduct(id));
-  }, [dispatch, id]);
+    if (!product) {
+      dispatch(allActions.productActs.fetchProduct(id));
+    }
+    if (isCompleted) {
+      dispatch(allActions.productActs.clear());
+      setIsReview(false);
+      setRating(0);
+      setComment("");
+      setShowReviewModal(false);
+      Toast.success("Review successfully");
+    }
+  }, [dispatch, id, product, isCompleted]);
 
   const onIncreaseQuantity = () => {
     if (quantity >= 10) {
@@ -38,7 +59,7 @@ const ProductDetails = () => {
   };
 
   const onDecreaseQuantity = () => {
-    if (product && product.stock - 1 > 0) {
+    if (quantity - 1 > 0) {
       setQuantity(quantity - 1);
     }
   };
@@ -53,6 +74,31 @@ const ProductDetails = () => {
       quantity: quantity,
     };
     dispatch(allActions.cartAcs.addToCart(cartItem));
+  };
+
+  const ratingChanged = (newRating) => {
+    setRating(newRating);
+  };
+
+  const onAddNewReviewHandler = () => {
+    setIsReview(true);
+    dispatch(
+      allActions.productActs.addNewReview({
+        productId: product && product._id,
+        rating: rating,
+        comment: comment,
+      })
+    );
+  };
+
+  const handleShowReviewModal = () => {
+    setShowReviewModal(true);
+  };
+
+  const handleCloseReviewModal = () => {
+    setRating(0);
+    setComment("");
+    setShowReviewModal(false);
   };
 
   return (
@@ -148,6 +194,7 @@ const ProductDetails = () => {
                     className="btn btn-primary mt-4"
                     data-toggle="modal"
                     data-target="#ratingModal"
+                    onClick={handleShowReviewModal}
                   >
                     Submit Your Review
                   </button>
@@ -158,57 +205,61 @@ const ProductDetails = () => {
                 )}
 
                 <div className="row mt-2 mb-5">
-                  <div className="rating w-50">
-                    <div
-                      className="modal fade"
-                      id="ratingModal"
-                      tabIndex="-1"
-                      role="dialog"
-                      aria-labelledby="ratingModalLabel"
-                      aria-hidden="true"
-                    >
-                      <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                          <div className="modal-header">
-                            <h5 className="modal-title" id="ratingModalLabel">
-                              Submit Review
-                            </h5>
-                            <button
-                              type="button"
-                              className="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
+                  <Modal show={showReviewModal} onHide={handleCloseReviewModal}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Review</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <ReactStars
+                        count={5}
+                        onChange={ratingChanged}
+                        size={100}
+                        activeColor="#ffd700"
+                      />
+                      ,
+                      <textarea
+                        name="review"
+                        id="review"
+                        className="form-control mt-3"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                      ></textarea>
+                      <Button
+                        id="register_button"
+                        type="submit"
+                        className="product btn btn-block py-3 mb-2"
+                        disabled={isReview}
+                        onClick={onAddNewReviewHandler}
+                        data_dismiss={dataDismiss}
+                        aria_label={ariaLabel}
+                      >
+                        {!isReview && "ADD"}
+                        {isReview && (
+                          <div>
+                            <span
+                              className="spinner-border spinner-border-sm"
+                              role="status"
+                              aria-hidden="true"
+                            ></span>
+                            HANDELING...
                           </div>
-                          <div className="modal-body">
-                            <ul className="stars">
-                              <li className="star">
-                                <i className="fa fa-star"></i>
-                              </li>
-                              <li className="star">
-                                <i className="fa fa-star"></i>
-                              </li>
-                              <li className="star">
-                                <i className="fa fa-star"></i>
-                              </li>
-                              <li className="star">
-                                <i className="fa fa-star"></i>
-                              </li>
-                              <li className="star">
-                                <i className="fa fa-star"></i>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                        )}
+                      </Button>
+                    </Modal.Body>
+                  </Modal>
                 </div>
               </div>
             </div>
           </div>
+          {product && product.reviews.length > 0 && (
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-10 mx-auto">
+                  <ListReviews reviews={product.reviews} />
+                </div>
+              </div>
+            </div>
+          )}
         </Fragment>
       )}
       <Footer />

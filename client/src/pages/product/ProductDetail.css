@@ -13,3 +13,10 @@
 ul.slider.animated li img {
   width: 250px !important;
 }
+
+.product.btn {
+  background-color: #fa9c23 !important;
+  border-color: #fa9c23 !important;
+  color: white !important;
+  margin-top: 2.5rem;
+}

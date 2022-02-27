@@ -18,3 +18,7 @@ export const fetchAllProductApi = ({
 export const fetchProductApi = (id) => axios.get(`/api/v1/products/${id}`);
 
 export const createProductApi = (product) => axios.post(`/api/v1/products`, product);
+
+export const addNewReviewApi = (review) => axios.put('/api/v1/products/new-review', review);
+
+export const getAllReviewsApi = (productId) => axios.get(`/api/v1/products/reviews/${productId}`);

@@ -3,6 +3,8 @@ import {
   createProductApi,
   fetchAllProductApi,
   fetchProductApi,
+  addNewReviewApi,
+  getAllReviewsApi
 } from "../../api/product";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -51,6 +53,41 @@ const createProduct = createAsyncThunk(
   }
 );
 
+const addNewReview = createAsyncThunk(
+  "product/createNewReview",
+  async (review, { dispatch }) => {
+    try {
+      await addNewReviewApi(review);
+      dispatch(productActions.addNewReview());
+      const { data } = await fetchProductApi(review.productId);
+      dispatch(productActions.fetchProduct(data));
+      dispatch(productActions.clear());
+    } catch (error) {
+      if (error.response && error.response.data) {
+        dispatch(productActions.clear());
+        dispatch(productActions.error(error.response.data.error));
+      }
+    }
+  }
+);
+
+// const getAllReviews = createAsyncThunk(
+//   "product/getAllReviews",
+//   async (productId, { dispatch }) => {
+//     try {
+//       const {data} = await getAllReviewsApi(productId);
+//       dispatch(productActions.getAllReviews(data.reviews));
+//       dispatch(productActions.clear());
+//     } catch (error) {
+//       if (error.response && error.response.data) {
+//         dispatch(productActions.clear());
+//         dispatch(productActions.error(error.response.data.error));
+//       }
+//     }
+//   }
+// );
+
+
 const clear = createAsyncThunk("product/clear", async (_, { dispatch }) => {
   dispatch(productActions.clear());
 });
@@ -59,6 +96,8 @@ const userActs = {
   fetchAllProduct,
   fetchProduct,
   createProduct,
+  addNewReview,
+  // getAllReviews,
   clear
 };
 

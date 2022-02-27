@@ -6,6 +6,8 @@ const {
   updateProduct,
   createAll,
   deleteProduct,
+  addNewReview,
+  getAllReviews,
 } = require("../controllers/product.controllers");
 
 const { authenticate, authorizaRoles } = require("../../middleware/auth");
@@ -14,6 +16,9 @@ const router = Router();
 
 router.get("/", getAllProduct);
 router.get("/:id", getProduct);
+
+router.put("/new-review", authenticate, addNewReview);
+router.get("/reviews/:productId", authenticate, getAllReviews);
 
 router.post("/", authenticate, authorizaRoles("admin"), createNewProduct);
 router.post("/all", createAll);

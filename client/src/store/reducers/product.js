@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialProduct = {
   products: null,
   product: null,
+  reviews: null,
 };
 
 const productSlice = createSlice({
@@ -17,6 +18,9 @@ const productSlice = createSlice({
     },
     createProduct(state, action) {
       return { ...state, isCompleted: action.payload };
+    },
+    addNewReview(state) {
+      return { ...state, isCompleted: true };
     },
     error(state, action) {
       return { ...state, error: action.payload };

@@ -7,7 +7,7 @@ const Rating = ({ rating }) => {
     if (rating >= number) {
       return <FaStar />;
     } else {
-      if (rating >= parseFloat(number / 2)) {
+      if (rating >= (number + 0.5)) {
         return <FaStarHalfAlt />;
       } else {
         return <FaRegStar />;
